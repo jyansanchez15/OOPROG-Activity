@@ -1,0 +1,58 @@
+import javax.swing.JOptionPane;
+
+class Person {
+    String name;
+    int age;
+
+    void getPersonDetails() {
+        name = JOptionPane.showInputDialog("Enter name:");
+        age = Integer.parseInt(JOptionPane.showInputDialog("Enter age:"));
+    }
+
+    void displayPersonDetails() {
+        JOptionPane.showMessageDialog(null, "Name: " + name + "\nAge: " + age);
+    }
+}
+
+class Employee extends Person {
+    String employeeId;
+    String department;
+
+    void getEmployeeDetails() {
+        getPersonDetails();
+        employeeId = JOptionPane.showInputDialog("Enter employee ID:");
+        department = JOptionPane.showInputDialog("Enter department:");
+    }
+
+    void displayEmployeeDetails() {
+        displayPersonDetails();
+        JOptionPane.showMessageDialog(null, "Employee ID: " + employeeId + "\nDepartment: " + department);
+    }
+}
+
+class Salary extends Employee {
+    double basicPay, hra, totalSalary;
+
+    void getSalaryDetails() {
+        getEmployeeDetails();
+        basicPay = Double.parseDouble(JOptionPane.showInputDialog("Enter basic pay:"));
+        hra = Double.parseDouble(JOptionPane.showInputDialog("Enter HRA:"));
+        totalSalary = basicPay + hra;  
+    }
+
+    void displaySalaryDetails() {
+        displayEmployeeDetails();
+        JOptionPane.showMessageDialog(null,
+            "Basic Pay: " + basicPay + 
+            "\nHRA: " + hra + 
+            "\nTotal Salary: " + totalSalary);
+    }
+}
+
+public class HierarchicalInheritance {
+    public static void main(String[] args) {
+        Salary s = new Salary();
+        s.getSalaryDetails();
+        s.displaySalaryDetails();
+    }
+}
