@@ -1,0 +1,71 @@
+import javax.swing.JOptionPane;
+
+class Employee {
+    protected String name;
+    protected double baseSalary;
+
+    public void getDetails() {
+        name = JOptionPane.showInputDialog("Enter employee name:");
+        baseSalary = Double.parseDouble(
+            JOptionPane.showInputDialog("Enter base salary:")
+        );
+    }
+
+    public double calculateSalary() {
+        return baseSalary;
+    }
+
+    public void displaySalary() {
+        String message = "Employee Name: " + name + "\nTotal Salary: $" + calculateSalary();
+        JOptionPane.showMessageDialog(null, message);
+    }
+}
+
+class Manager extends Employee {
+    private double bonus;
+
+    public void getDetails() {
+        super.getDetails();
+        bonus = Double.parseDouble(
+            JOptionPane.showInputDialog("Enter bonus:")
+        );
+    }
+
+  
+    public double calculateSalary() {
+        return baseSalary + bonus;
+    }
+
+    public void displaySalary() {
+        String message = "Manager Name: " + name + "\nTotal Salary (with bonus): $" + calculateSalary();
+        JOptionPane.showMessageDialog(null, message);
+    }
+}
+
+public class EmployeeManagerGUI {
+    public static void main(String[] args) {
+        String[] options = { "Manager", "Regular Employee" };
+        int choice = JOptionPane.showOptionDialog(
+            null,
+            "Select employee type:",
+            "Employee Type",
+            JOptionPane.DEFAULT_OPTION,
+            JOptionPane.QUESTION_MESSAGE,
+            null,
+            options,
+            options[0]
+        );
+
+        if (choice == 0) { 
+            Manager manager = new Manager();
+            manager.getDetails();
+            manager.displaySalary();
+        } else if (choice == 1) { 
+            Employee employee = new Employee();
+            employee.getDetails();
+            employee.displaySalary();
+        } else {
+            JOptionPane.showMessageDialog(null, "No selection made. Exiting.");
+        }
+    }
+}
