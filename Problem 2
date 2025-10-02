@@ -1,0 +1,98 @@
+import javax.swing.JOptionPane;
+
+class Product {
+    protected String name;
+    protected double price;
+
+    public void getDetails() {
+        name = JOptionPane.showInputDialog("Enter product name:");
+        price = Double.parseDouble(
+            JOptionPane.showInputDialog("Enter base price:")
+        );
+    }
+
+    public double calculateFinalPrice() {
+        return price; // Default: no changes
+    }
+
+    public void displayFinalPrice() {
+        String message = "Product: " + name + "\nFinal Price: $" + calculateFinalPrice();
+        JOptionPane.showMessageDialog(null, message);
+    }
+}
+
+class Electronics extends Product {
+    private double warrantyFee;
+
+    public void getDetails() {
+        super.getDetails();
+        warrantyFee = Double.parseDouble(
+            JOptionPane.showInputDialog("Enter warranty fee:")
+        );
+    }
+
+    public double calculateFinalPrice() {
+        return price + warrantyFee;
+    }
+
+    public void displayFinalPrice() {
+        String message = "Electronics Product: " + name +
+                         "\nBase Price: $" + price +
+                         "\nWarranty Fee: $" + warrantyFee +
+                         "\nFinal Price: $" + calculateFinalPrice();
+        JOptionPane.showMessageDialog(null, message);
+    }
+}
+
+class Clothes extends Product {
+    private double discountPercent;
+
+    public void getDetails() {
+        super.getDetails();
+        discountPercent = Double.parseDouble(
+            JOptionPane.showInputDialog("Enter discount (%) on clothes:")
+        );
+    }
+
+    public double calculateFinalPrice() {
+        double discountAmount = (price * discountPercent) / 100;
+        return price - discountAmount;
+    }
+
+    public void displayFinalPrice() {
+        double finalPrice = calculateFinalPrice();
+        String message = "Clothing Product: " + name +
+                         "\nBase Price: $" + price +
+                         "\nDiscount: " + discountPercent + "%" +
+                         "\nFinal Price: $" + finalPrice;
+        JOptionPane.showMessageDialog(null, message);
+    }
+}
+
+public class ProductApp {
+    public static void main(String[] args) {
+        String[] options = {"Electronics", "Clothes"};
+        int choice = JOptionPane.showOptionDialog(
+            null,
+            "Select product type:",
+            "Product Type",
+            JOptionPane.DEFAULT_OPTION,
+            JOptionPane.QUESTION_MESSAGE,
+            null,
+            options,
+            options[0]
+        );
+
+        if (choice == 0) {
+            Electronics electronic = new Electronics();
+            electronic.getDetails();
+            electronic.displayFinalPrice();
+        } else if (choice == 1) {
+            Clothes clothing = new Clothes();
+            clothing.getDetails();
+            clothing.displayFinalPrice();
+        } else {
+            JOptionPane.showMessageDialog(null, "No selection made. Exiting.");
+        }
+    }
+}
